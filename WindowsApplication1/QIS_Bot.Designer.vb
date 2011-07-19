@@ -64,6 +64,7 @@ Partial Class QIS_Bot
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.Button4 = New System.Windows.Forms.Button()
+        Me.Button5 = New System.Windows.Forms.Button()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
@@ -209,6 +210,7 @@ Partial Class QIS_Bot
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.Button5)
         Me.GroupBox1.Controls.Add(Me.CheckBox2)
         Me.GroupBox1.Controls.Add(Me.TextBox7)
         Me.GroupBox1.Controls.Add(Me.TextBox6)
@@ -239,18 +241,18 @@ Partial Class QIS_Bot
         Me.CheckBox2.AutoSize = True
         Me.CheckBox2.Checked = True
         Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox2.Location = New System.Drawing.Point(558, 169)
+        Me.CheckBox2.Location = New System.Drawing.Point(553, 142)
         Me.CheckBox2.Name = "CheckBox2"
-        Me.CheckBox2.Size = New System.Drawing.Size(67, 17)
+        Me.CheckBox2.Size = New System.Drawing.Size(71, 17)
         Me.CheckBox2.TabIndex = 21
-        Me.CheckBox2.Text = "Email An"
+        Me.CheckBox2.Text = "E-Mail An"
         Me.CheckBox2.UseVisualStyleBackColor = True
         '
         'TextBox7
         '
         Me.TextBox7.Location = New System.Drawing.Point(97, 192)
         Me.TextBox7.Name = "TextBox7"
-        Me.TextBox7.Size = New System.Drawing.Size(455, 20)
+        Me.TextBox7.Size = New System.Drawing.Size(450, 20)
         Me.TextBox7.TabIndex = 20
         Me.TextBox7.Text = "smtpmail.t-online.de"
         '
@@ -259,7 +261,7 @@ Partial Class QIS_Bot
         Me.TextBox6.Location = New System.Drawing.Point(97, 166)
         Me.TextBox6.Name = "TextBox6"
         Me.TextBox6.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.TextBox6.Size = New System.Drawing.Size(455, 20)
+        Me.TextBox6.Size = New System.Drawing.Size(450, 20)
         Me.TextBox6.TabIndex = 19
         Me.TextBox6.Text = "123456"
         '
@@ -267,7 +269,7 @@ Partial Class QIS_Bot
         '
         Me.TextBox5.Location = New System.Drawing.Point(97, 140)
         Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.Size = New System.Drawing.Size(455, 20)
+        Me.TextBox5.Size = New System.Drawing.Size(450, 20)
         Me.TextBox5.TabIndex = 18
         Me.TextBox5.Text = "mutermann@t-online.de"
         '
@@ -411,6 +413,15 @@ Partial Class QIS_Bot
         Me.Button4.Text = "STOP"
         Me.Button4.UseVisualStyleBackColor = True
         '
+        'Button5
+        '
+        Me.Button5.Location = New System.Drawing.Point(553, 164)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(71, 22)
+        Me.Button5.TabIndex = 14
+        Me.Button5.Text = "Test Mail"
+        Me.Button5.UseVisualStyleBackColor = True
+        '
         'QIS_Bot
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -474,5 +485,6 @@ Partial Class QIS_Bot
     Friend WithEvents TextBox7 As System.Windows.Forms.TextBox
     Friend WithEvents TextBox6 As System.Windows.Forms.TextBox
     Friend WithEvents TextBox5 As System.Windows.Forms.TextBox
+    Friend WithEvents Button5 As System.Windows.Forms.Button
 
 End Class

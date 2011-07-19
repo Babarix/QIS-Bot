@@ -402,4 +402,8 @@ Public Class QIS_Bot
         End Try
     End Sub
 
+    Private Sub Button5_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button5.Click
+        sendMail("QIS BOT TEST E-MAIL")
+        MsgBox("Test E-Mail gesendet")
+    End Sub
 End Class
