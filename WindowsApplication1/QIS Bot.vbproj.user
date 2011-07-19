@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PublishUrlHistory>M:\Users\Nikolai\Documents\Visual Studio 2010\Projects\QIS_BOT\WindowsApplication1\publish\|M:\Users\Nikolai\Documents\Visual Studio 2010\Projects\WindowsApplication1\WindowsApplication1\publish\|ftp://gera051.server4you.de/|sftp://gera051.server4you.de/|ftps://gera051.server4you.de/</PublishUrlHistory>
+    <InstallUrlHistory>http://www.t4k3-down.de/bsoft/BSoftQISBot/|http://www.t4k3-down.de/bsoft/BSoft QIS Bot/</InstallUrlHistory>
+    <SupportUrlHistory />
+    <UpdateUrlHistory />
+    <BootstrapperUrlHistory />
+    <ErrorReportUrlHistory />
+    <FallbackCulture>de-DE</FallbackCulture>
+    <VerifyUploadedFiles>false</VerifyUploadedFiles>
+  </PropertyGroup>
+</Project>
