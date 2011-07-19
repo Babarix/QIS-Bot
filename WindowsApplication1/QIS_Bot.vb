@@ -391,10 +391,15 @@ Public Class QIS_Bot
     End Sub
 
     Private Sub sendMail(ByVal tex)
-        log("EMAIL mit: " + tex)
-        Dim myClient As New Net.Mail.SmtpClient(TextBox7.Text)
-        myClient.Credentials = New Net.NetworkCredential(TextBox5.Text, TextBox6.Text)
-        myClient.Send(TextBox5.Text, TextBox5.Text, "QIS BOT", tex)
+        Try
+            log("EMAIL mit: " + tex)
+            Dim myClient As New Net.Mail.SmtpClient(TextBox7.Text)
+            myClient.Credentials = New Net.NetworkCredential(TextBox5.Text, TextBox6.Text)
+            myClient.Send(TextBox5.Text, TextBox5.Text, "QIS BOT", tex)
+        Catch ex As Exception
+            MsgBox("Fehler beim senden der E-Mail!")
+            log("Fehler beim sender der E-Mail: " + ex.Message)
+        End Try
     End Sub
 
 End Class
