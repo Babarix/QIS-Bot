@@ -18,5 +18,8 @@ First release
 - Vesteckte Passwort Felder
 - Guthub upload
 
+0.9.5
+- Anpassung an geänderte Website
+
 geplannt:
 - momentan nix, also sagt mier was ihr euch wünscht

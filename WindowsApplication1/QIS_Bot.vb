@@ -108,7 +108,8 @@ Public Class QIS_Bot
         ElseIf (state = 4) Then
             Label3.Text = "Datenabrufen: Step " + state.ToString
             ProgressBar1.PerformStep()
-            tableneuLoad(WebBrowser1.Document.Forms(0).Children(4).Children(0).InnerHtml)
+            ' tableneuLoad(WebBrowser1.Document.Forms(1).Children(4).Children(0).InnerHtml)
+            tableneuLoad(WebBrowser1.Document.Forms(0).Children(6).Children(0).InnerHtml)
             button = WebBrowser1.Document.GetElementById("wrapper").Children(4).Children(2)
             button.InvokeMember("click")
             state += 1
@@ -318,6 +319,7 @@ Public Class QIS_Bot
         Dim writer As StreamWriter
         writer = New StreamWriter("log.txt", True)
         writer.WriteLine(Date.Now + " " + tex)     '1 Zeilen
+        writer.Flush()
         writer.Close()
         writer = Nothing
     End Sub
