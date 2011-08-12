@@ -6,8 +6,8 @@ Public Class QIS_Bot
 
     Dim state As Integer = 0
     Dim button As HtmlElement
-    Dim tableneu(,) As String
-    Dim tablealt(,) As String
+    Dim tableneu As List(Of List(Of String))
+    Dim tablealt As List(Of List(Of String))
     Dim maxzalt As Integer = -1
     Dim maxzneu As Integer = -1
     Dim maxspalten As Integer = 10
@@ -16,10 +16,10 @@ Public Class QIS_Bot
     Dim fund As Integer = 0
 
     ''' <summary>
-    ''' Klick auf Button1 der den Bot startet 
+    ''' Klick auf Button1 der den Bot startet
     ''' </summary>
-    ''' <param name="sender">Standartübergabe</param>
-    ''' <param name="e">Standartübergabe</param>
+    ''' <param name="sender">StandartÃ¼bergabe</param>
+    ''' <param name="e">StandartÃ¼bergabe</param>
     ''' <remarks></remarks>
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         If (TextBox1.Text <> "" And TextBox2.Text <> "" And TextBox3.Text > 59) Then
@@ -39,12 +39,13 @@ Public Class QIS_Bot
                 log("Alarm Ton: " + TextBox4.Text)
                 log("Alarm An: " + CheckBox1.Checked.ToString)
                 writeOptions()
+                Timer3.Start()
                 WebBrowser1.Navigate("https://qis.hs-albsig.de/qisserver/rds?state=user&type=0")
             Else
                 MsgBox("Angegebene Datei existirt nicht oder ist keine WAV Datei!")
             End If
         Else
-            MsgBox("Einstellungen ungültig")
+            MsgBox("Einstellungen ungÃ¼ltig")
         End If
     End Sub
 
@@ -54,24 +55,42 @@ Public Class QIS_Bot
         DataGridView1.Visible = True
         reload()
         readSave()
-        Dim tex As String = checklist(tablealt, tableneu)
-        If (tex <> "none") Then 'vergleich
+        Dim tex As List(Of List(Of String)) = New List(Of List(Of String))
+        For Each t As List(Of String) In tableneu
+            Dim b As Boolean = False
+            For Each tt As List(Of String) In tablealt
+                If (t(0) = tt(0)) Then
+                    b = True
+                End If
+            Next
+            If (b = False) Then
+                tex.Add(t)
+            End If
+            'If (tablealt.Contains(t) = False) Then
+            '    tex.Add(t)
+            'End If
+        Next
+
+        If (tex.Count > 0) Then 'vergleich
             'meldung
             If (CheckBox1.Checked) Then
                 My.Computer.Audio.Play(TextBox4.Text)
             End If
-            log("!Neuer Eintrag:" + tex)
+            Dim mel As String = "Neuer Eintrag: " + Environment.NewLine()
+            For Each l As List(Of String) In tex
+                mel += l(1) + Environment.NewLine() + "Note: " + l(3) + Environment.NewLine() + "Status: " + l(4) + Environment.NewLine() + Environment.NewLine()
+            Next
+
+            log(mel)
             If (CheckBox2.Checked = True) Then
-                sendMail("Neuer Eintrag:" + tex + Environment.NewLine() + "Note: " + tableneu(fund, 3) + Environment.NewLine() + "Status: " + tableneu(fund, 4))
+                sendMail(mel)
             End If
-            MsgBox("Neuer Eintrag:" + tex + Environment.NewLine() + "Note: " + tableneu(fund, 3) + Environment.NewLine() + "Status: " + tableneu(fund, 4)) '3
-
-
-            '  My.Computer.Audio.Play(Application.StartupPath + "/submarinealert.wav")
+            MsgBox(mel) '3
         End If
+
         writeSave()
         rest = 0
-        Label3.Text = "Warten auf nächtes abfragen, Restzeit: " + (TextBox3.Text - rest).ToString
+        Label3.Text = "Warten auf nÃ¤chtes abfragen, Restzeit: " + (TextBox3.Text - rest).ToString
         ProgressBar1.Value = 0
         ProgressBar1.Maximum = TextBox3.Text * 10
         Timer2.Start()
@@ -92,6 +111,7 @@ Public Class QIS_Bot
             ProgressBar1.PerformStep()
             button = WebBrowser1.Document.GetElementById("makronavigation").Children(0).Children(2).Children(1)
             button.InvokeMember("click")
+            Timer3.Stop()
             state += 1
         ElseIf (state = 2) Then
             Label3.Text = "Datenabrufen: Step " + state.ToString
@@ -126,6 +146,7 @@ Public Class QIS_Bot
         Label3.Text = "Datenverarbeiten"
         log("Datenverarbeiten")
         ProgressBar1.PerformStep()
+        tableneu.Clear()
         Dim zeilen As String() = tex.Split(Environment.NewLine())
         Dim i As Integer = 0
         Dim x As Integer = -1 'zeilen
@@ -141,7 +162,10 @@ Public Class QIS_Bot
         Catch ex As Exception
         End Try
 
-        ReDim tableneu(maxzneu, maxspalten)
+        For d As Integer = 0 To maxzneu
+            tableneu.Add(New List(Of String))
+        Next
+
         i = 13
         While (x < maxzneu)
             x += 1
@@ -152,7 +176,7 @@ Public Class QIS_Bot
                 If t.EndsWith(" ") Then
                     t = t.Substring(0, t.Length - 1)
                 End If
-                tableneu(x, y) = t
+                tableneu(x).Add(t)
                 y += 1
                 i += 1
             End While
@@ -181,7 +205,7 @@ Public Class QIS_Bot
             Dim dgvCell As DataGridViewCell
             While (y < maxspalten)
                 dgvCell = New DataGridViewTextBoxCell()
-                dgvCell.Value = tableneu(x, y)
+                dgvCell.Value = tableneu(x)(y)
                 dgvRow.Cells.Add(dgvCell)
                 y += 1
             End While
@@ -224,15 +248,19 @@ Public Class QIS_Bot
             Dim objDateiLeser As StreamReader
             Dim x As Integer = -1 'zeilen
             Dim y As Integer = 0 'spalten
+            Dim ii As Integer = 0
             objDateiLeser = New StreamReader("save.txt")
             maxzalt = objDateiLeser.ReadLine()    '1 Zeilen
             maxspalten = objDateiLeser.ReadLine()   '2 Spalten
-            ReDim tablealt(maxzalt, maxspalten)
+            tablealt.Clear()
+            For d As Integer = 0 To maxzalt
+                tablealt.Add(New List(Of String))
+            Next
             While (x < maxzalt)
                 x += 1
                 y = 0
                 While (y < maxspalten)
-                    tablealt(x, y) = objDateiLeser.ReadLine
+                    tablealt(x).Add(objDateiLeser.ReadLine().Substring(2))
                     y += 1
                 End While
             End While
@@ -250,9 +278,7 @@ Public Class QIS_Bot
         '4 Alarm Ton
         '5 Alarm An
         '6 Email adresse
-        '7 Email passwort
-        '8 Email server
-        '9 Email an
+        '7 Email an
         log("readOptions")
         Try
             Dim objDateiLeser As StreamReader
@@ -263,8 +289,6 @@ Public Class QIS_Bot
             TextBox4.Text = objDateiLeser.ReadLine
             CheckBox1.Checked = (objDateiLeser.ReadLine = "True")
             TextBox5.Text = objDateiLeser.ReadLine
-            TextBox6.Text = objDateiLeser.ReadLine
-            TextBox7.Text = objDateiLeser.ReadLine
             CheckBox2.Checked = (objDateiLeser.ReadLine = "True")
             objDateiLeser.Close()
             objDateiLeser = Nothing
@@ -285,8 +309,6 @@ Public Class QIS_Bot
             writer.WriteLine(TextBox4.Text)
             writer.WriteLine(CheckBox1.Checked.ToString)
             writer.WriteLine(TextBox5.Text)
-            writer.WriteLine(TextBox6.Text)
-            writer.WriteLine(TextBox7.Text)
             writer.WriteLine(CheckBox2.Checked.ToString)
             writer.Close()
             writer = Nothing
@@ -300,19 +322,29 @@ Public Class QIS_Bot
         Dim writer As StreamWriter
         Dim x As Integer = -1 'zeilen
         Dim y As Integer = 0 'spalten
-        writer = New StreamWriter("save.txt", False)
-        writer.WriteLine(maxzneu)     '1 Zeilen
-        writer.WriteLine(maxspalten)    '2 Spalten
-        While (x < maxzneu)
-            x += 1
-            y = 0
-            While (y < maxspalten)
-                writer.WriteLine(tableneu(x, y))
-                y += 1
+        Dim ii As Integer = 0
+        Try
+            writer = New StreamWriter("save.txt", False)
+            writer.WriteLine(maxzneu)     '1 Zeilen
+            writer.WriteLine(maxspalten)    '2 Spalten
+            While (x < maxzneu)
+                x += 1
+                y = 0
+                ii = 0
+                While (y < maxspalten)
+                    writer.WriteLine(ii.ToString + " " + tableneu(x)(y))
+                    y += 1
+                    ii += 1
+                End While
             End While
-        End While
-        writer.Close()
-        writer = Nothing
+            writer.Close()
+            writer = Nothing
+        Catch ex As Exception
+        End Try
+
+
+        GC.Collect()
+        GC.WaitForPendingFinalizers()
     End Sub
 
     Sub log(ByVal tex As String)
@@ -330,6 +362,8 @@ Public Class QIS_Bot
         TextBox4.Text = Application.StartupPath + "\submarinealert.wav"
         log("##Programm start##")
         log("Version: " + Application.ProductVersion)
+        tableneu = New List(Of List(Of String))
+        tablealt = New List(Of List(Of String))
         readOptions()
     End Sub
 
@@ -345,6 +379,7 @@ Public Class QIS_Bot
         GroupBox3.Enabled = False
         Label3.Text = "Datenabrufen"
         state = 0
+        Timer3.Start()
         WebBrowser1.Navigate("https://qis.hs-albsig.de/qisserver/rds?state=user&type=0")
         'Dim objDateiLeser As StreamReader
         'objDateiLeser = New StreamReader("M:\\test.txt")
@@ -357,7 +392,7 @@ Public Class QIS_Bot
     Private Sub Timer2_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer2.Tick
         rest += 1
         ProgressBar1.PerformStep()
-        Label3.Text = "Warten auf nächtes abfragen, Restzeit: " + (TextBox3.Text - rest).ToString
+        Label3.Text = "Warten auf nÃ¤chtes abfragen, Restzeit: " + (TextBox3.Text - rest).ToString
     End Sub
 
     Private Sub QIS_Bot_FormClosed(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles MyBase.FormClosed
@@ -395,9 +430,9 @@ Public Class QIS_Bot
     Private Sub sendMail(ByVal tex)
         Try
             log("EMAIL mit: " + tex)
-            Dim myClient As New Net.Mail.SmtpClient(TextBox7.Text)
-            myClient.Credentials = New Net.NetworkCredential(TextBox5.Text, TextBox6.Text)
-            myClient.Send(TextBox5.Text, TextBox5.Text, "QIS BOT", tex)
+            Dim myClient As New Net.Mail.SmtpClient("smtp.web.de")
+            myClient.Credentials = New Net.NetworkCredential("QIS_info@web.de", AscToString(49, 50, 51, 52, 53, 54, 113, 119, 101))
+            myClient.Send("QIS_info@web.de", TextBox5.Text, "QIS BOT", tex)
         Catch ex As Exception
             MsgBox("Fehler beim senden der E-Mail!")
             log("Fehler beim sender der E-Mail: " + ex.Message)
@@ -408,4 +443,22 @@ Public Class QIS_Bot
         sendMail("QIS BOT TEST E-MAIL")
         MsgBox("Test E-Mail gesendet")
     End Sub
+
+    Private Sub Timer3_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer3.Tick
+        Timer3.Stop()
+        MsgBox("Fehler auf der QIS Seite. Vieleicht Wartungen.")
+        log("Fehler auf der QIS Seite. Vieleicht Wartungen.")
+        Me.Close()
+    End Sub
+
+    'Quelle: http://www.vbarchiv.net/tipps/details.php?id=825
+    Public Function AscToString(ByVal ParamArray nAsc() As Object) As String
+        Dim i As Integer
+        Dim sString As String
+
+        For i = 0 To UBound(nAsc)
+            sString = sString & Chr(nAsc(i))
+        Next i
+        AscToString = sString
+    End Function
 End Class

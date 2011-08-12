@@ -21,5 +21,10 @@ First release
 0.9.5
 - Anpassung an geänderte Website
 
+0.9.7
+- Email Versand über Zentrale E-Mail
+- Interface aufreum arbeiten
+- Erkennt jetzt mehere neue Prüfungen gleichzeitig
+
 geplannt:
 - momentan nix, also sagt mier was ihr euch wünscht

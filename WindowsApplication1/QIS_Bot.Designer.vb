@@ -44,12 +44,9 @@ Partial Class QIS_Bot
         Me.Label4 = New System.Windows.Forms.Label()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.Button5 = New System.Windows.Forms.Button()
         Me.CheckBox2 = New System.Windows.Forms.CheckBox()
-        Me.TextBox7 = New System.Windows.Forms.TextBox()
-        Me.TextBox6 = New System.Windows.Forms.TextBox()
         Me.TextBox5 = New System.Windows.Forms.TextBox()
-        Me.Label8 = New System.Windows.Forms.Label()
-        Me.Label7 = New System.Windows.Forms.Label()
         Me.Label6 = New System.Windows.Forms.Label()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.Button3 = New System.Windows.Forms.Button()
@@ -64,11 +61,13 @@ Partial Class QIS_Bot
         Me.GroupBox3 = New System.Windows.Forms.GroupBox()
         Me.OpenFileDialog1 = New System.Windows.Forms.OpenFileDialog()
         Me.Button4 = New System.Windows.Forms.Button()
-        Me.Button5 = New System.Windows.Forms.Button()
+        Me.Timer3 = New System.Windows.Forms.Timer(Me.components)
+        Me.GroupBox4 = New System.Windows.Forms.GroupBox()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.GroupBox3.SuspendLayout()
+        Me.GroupBox4.SuspendLayout()
         Me.SuspendLayout()
         '
         'WebBrowser1
@@ -108,9 +107,9 @@ Partial Class QIS_Bot
         '
         'Button1
         '
-        Me.Button1.Location = New System.Drawing.Point(660, 515)
+        Me.Button1.Location = New System.Drawing.Point(6, 19)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(165, 71)
+        Me.Button1.Size = New System.Drawing.Size(164, 73)
         Me.Button1.TabIndex = 5
         Me.Button1.Text = "GO"
         Me.Button1.UseVisualStyleBackColor = True
@@ -212,11 +211,7 @@ Partial Class QIS_Bot
         '
         Me.GroupBox1.Controls.Add(Me.Button5)
         Me.GroupBox1.Controls.Add(Me.CheckBox2)
-        Me.GroupBox1.Controls.Add(Me.TextBox7)
-        Me.GroupBox1.Controls.Add(Me.TextBox6)
         Me.GroupBox1.Controls.Add(Me.TextBox5)
-        Me.GroupBox1.Controls.Add(Me.Label8)
-        Me.GroupBox1.Controls.Add(Me.Label7)
         Me.GroupBox1.Controls.Add(Me.Label6)
         Me.GroupBox1.Controls.Add(Me.CheckBox1)
         Me.GroupBox1.Controls.Add(Me.Button3)
@@ -231,70 +226,44 @@ Partial Class QIS_Bot
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Location = New System.Drawing.Point(15, 439)
         Me.GroupBox1.Name = "GroupBox1"
-        Me.GroupBox1.Size = New System.Drawing.Size(639, 221)
+        Me.GroupBox1.Size = New System.Drawing.Size(639, 173)
         Me.GroupBox1.TabIndex = 10
         Me.GroupBox1.TabStop = False
         Me.GroupBox1.Text = "Optionen"
+        '
+        'Button5
+        '
+        Me.Button5.Location = New System.Drawing.Point(558, 146)
+        Me.Button5.Name = "Button5"
+        Me.Button5.Size = New System.Drawing.Size(75, 22)
+        Me.Button5.TabIndex = 14
+        Me.Button5.Text = "Test Mail"
+        Me.Button5.UseVisualStyleBackColor = True
         '
         'CheckBox2
         '
         Me.CheckBox2.AutoSize = True
         Me.CheckBox2.Checked = True
         Me.CheckBox2.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.CheckBox2.Location = New System.Drawing.Point(553, 142)
+        Me.CheckBox2.Location = New System.Drawing.Point(467, 150)
         Me.CheckBox2.Name = "CheckBox2"
         Me.CheckBox2.Size = New System.Drawing.Size(71, 17)
         Me.CheckBox2.TabIndex = 21
         Me.CheckBox2.Text = "E-Mail An"
         Me.CheckBox2.UseVisualStyleBackColor = True
         '
-        'TextBox7
-        '
-        Me.TextBox7.Location = New System.Drawing.Point(97, 192)
-        Me.TextBox7.Name = "TextBox7"
-        Me.TextBox7.Size = New System.Drawing.Size(450, 20)
-        Me.TextBox7.TabIndex = 20
-        Me.TextBox7.Text = "smtpmail.t-online.de"
-        '
-        'TextBox6
-        '
-        Me.TextBox6.Location = New System.Drawing.Point(97, 166)
-        Me.TextBox6.Name = "TextBox6"
-        Me.TextBox6.PasswordChar = Global.Microsoft.VisualBasic.ChrW(42)
-        Me.TextBox6.Size = New System.Drawing.Size(450, 20)
-        Me.TextBox6.TabIndex = 19
-        Me.TextBox6.Text = "123456"
-        '
         'TextBox5
         '
-        Me.TextBox5.Location = New System.Drawing.Point(97, 140)
+        Me.TextBox5.Location = New System.Drawing.Point(89, 148)
         Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.Size = New System.Drawing.Size(450, 20)
+        Me.TextBox5.Size = New System.Drawing.Size(372, 20)
         Me.TextBox5.TabIndex = 18
         Me.TextBox5.Text = "mutermann@t-online.de"
-        '
-        'Label8
-        '
-        Me.Label8.AutoSize = True
-        Me.Label8.Location = New System.Drawing.Point(6, 195)
-        Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(70, 13)
-        Me.Label8.TabIndex = 17
-        Me.Label8.Text = "E-Mail Server"
-        '
-        'Label7
-        '
-        Me.Label7.AutoSize = True
-        Me.Label7.Location = New System.Drawing.Point(6, 169)
-        Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(85, 13)
-        Me.Label7.TabIndex = 16
-        Me.Label7.Text = "E-Mail Password"
         '
         'Label6
         '
         Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(6, 143)
+        Me.Label6.Location = New System.Drawing.Point(6, 151)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(77, 13)
         Me.Label6.TabIndex = 15
@@ -406,32 +375,37 @@ Partial Class QIS_Bot
         '
         'Button4
         '
-        Me.Button4.Location = New System.Drawing.Point(832, 515)
+        Me.Button4.Location = New System.Drawing.Point(176, 19)
         Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(165, 71)
+        Me.Button4.Size = New System.Drawing.Size(155, 73)
         Me.Button4.TabIndex = 13
         Me.Button4.Text = "STOP"
         Me.Button4.UseVisualStyleBackColor = True
         '
-        'Button5
+        'Timer3
         '
-        Me.Button5.Location = New System.Drawing.Point(553, 164)
-        Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(71, 22)
-        Me.Button5.TabIndex = 14
-        Me.Button5.Text = "Test Mail"
-        Me.Button5.UseVisualStyleBackColor = True
+        Me.Timer3.Interval = 4000
+        '
+        'GroupBox4
+        '
+        Me.GroupBox4.Controls.Add(Me.Button1)
+        Me.GroupBox4.Controls.Add(Me.Button4)
+        Me.GroupBox4.Location = New System.Drawing.Point(660, 515)
+        Me.GroupBox4.Name = "GroupBox4"
+        Me.GroupBox4.Size = New System.Drawing.Size(337, 97)
+        Me.GroupBox4.TabIndex = 14
+        Me.GroupBox4.TabStop = False
+        Me.GroupBox4.Text = "Steuerung"
         '
         'QIS_Bot
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(1009, 669)
-        Me.Controls.Add(Me.Button4)
+        Me.ClientSize = New System.Drawing.Size(1009, 615)
+        Me.Controls.Add(Me.GroupBox4)
         Me.Controls.Add(Me.GroupBox3)
         Me.Controls.Add(Me.GroupBox2)
         Me.Controls.Add(Me.GroupBox1)
-        Me.Controls.Add(Me.Button1)
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.KeyPreview = True
         Me.Name = "QIS_Bot"
@@ -442,6 +416,7 @@ Partial Class QIS_Bot
         Me.GroupBox2.ResumeLayout(False)
         Me.GroupBox2.PerformLayout()
         Me.GroupBox3.ResumeLayout(False)
+        Me.GroupBox4.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -478,13 +453,11 @@ Partial Class QIS_Bot
     Friend WithEvents Label5 As System.Windows.Forms.Label
     Friend WithEvents CheckBox1 As System.Windows.Forms.CheckBox
     Friend WithEvents Button4 As System.Windows.Forms.Button
-    Friend WithEvents Label8 As System.Windows.Forms.Label
-    Friend WithEvents Label7 As System.Windows.Forms.Label
     Friend WithEvents Label6 As System.Windows.Forms.Label
     Friend WithEvents CheckBox2 As System.Windows.Forms.CheckBox
-    Friend WithEvents TextBox7 As System.Windows.Forms.TextBox
-    Friend WithEvents TextBox6 As System.Windows.Forms.TextBox
     Friend WithEvents TextBox5 As System.Windows.Forms.TextBox
     Friend WithEvents Button5 As System.Windows.Forms.Button
+    Friend WithEvents Timer3 As System.Windows.Forms.Timer
+    Friend WithEvents GroupBox4 As System.Windows.Forms.GroupBox
 
 End Class
